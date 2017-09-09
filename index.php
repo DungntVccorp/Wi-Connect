@@ -25,7 +25,7 @@
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
         <meta name="author" content="Coderthemes">
         <link rel="shortcut icon" href="images/favicon.ico">
-        <title>Wi Connect</title>
+        <title>Wifi Connect</title>
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet" type="text/css">
@@ -100,7 +100,7 @@
                         </button>
                         <!-- LOGO -->
                         <a class="navbar-brand logo" href="../index.html">
-                        Wi Connect
+                        Wifi Connect
                     </a>
                     </div>
                     <!-- end navbar-header -->
@@ -161,7 +161,7 @@
                     <div class="row">
                         <div class="col-md-5 col-sm-7" style="text-align: center;">
                             <div class="home-wrapper home-wrapper-alt p-0">
-                                <h1 class="h1 font-light text-white w-full">Wi Connect is a fully responsive landing page template</h1>
+                                <h1 class="h1 font-light text-white w-full">Wifi Connect is a fully responsive landing page template</h1>
                                 <h4 class="text-light w-full">Zodkoo is a fully responsive landing page built using the latest Bootstrap framework. It's designed for describing your app, agency or business. The clean and well commented code allows easy customization of the theme.</h4>
                                 <a href="" class="btn btn-white-bordered">Đăng nhập</a>
                                 <span class="or-space text-light">Hoặc</span>
@@ -306,6 +306,10 @@
                                                 </div>
                                                 <? } ?>
                                     </form>
+                                    <? }else { ?>
+                                        <div class="alert alert-dismissable">
+                                            <p>DEFAULT</p>
+                                        </div>
                                     <? } ?>
                         </div>
                         <!-- end col -->
