@@ -44,6 +44,7 @@
           <script src="js/html5shiv.js"></script>
           <script src="js/respond.min.js"></script>
         <![endif]-->
+        <script src="js/jquery-2.1.4.min.js"></script>
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
         <script>
         (function(i, s, o, g, r, a, m) {
@@ -141,10 +142,9 @@
                             <li>
                                 <? if($is_status) { ?>
                                     <a href="" class="btn btn-white-fill navbar-btn">Đăng xuất</a>
-                                <?}else{?>
-                                    <a href="" class="btn btn-white-fill navbar-btn">Sử dụng miễn phí</a>
-                                <?}?>
-
+                                    <?}else{?>
+                                        <Button id="free_login" class="btn btn-white-fill navbar-btn btn_xxx_yyy">Sử dụng miễn phí</Button>
+                                        <?}?>
                             </li>
                         </ul>
                     </div>
@@ -178,63 +178,63 @@
                                 </div>
                                 <div class="alert alert-info" style="padding:0px;">
                                     <table class="table table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <td>IP address</td>
-                                                    <td>
-                                                        <?php echo $ip; ?> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>MAC Address</td>
-                                                    <td>
-                                                        <?php echo $mac; ?>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Quota</td>
-                                                    <td>
-                                                        <? if($limitbytesout) { ?>
-                                                            <php? echo limitbytesout/1000; ?> Kib
-                                                                <? }else{ ?>
-                                                                    Unlimited
-                                                                    <? } ?>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>up/down</td>
-                                                    <td>
-                                                        <?php echo $byteup; ?> /
-                                                        <?php echo $bytedown; ?> </td>
-                                                </tr>
-                                                <? if($sessiontimeleft) { ?>
-                                                    <td>connected / left:</td>
-                                                    <td>
-                                                        <?php echo $uptime; ?> /
-                                                        <?php echo $sessiontimeleft; ?> </td>
-                                                    <? }else{ ?>
-                                                        <tr>
-                                                            <td>connected:</td>
-                                                            <td>
-                                                                <?php echo $uptime; ?> </td>
-                                                        </tr>
-                                                        <? } ?>
-                                                            <? if($refreshtimeout) { ?>
-                                                                <tr>
-                                                                    <td>status refresh</td>
-                                                                    <td>
-                                                                        <?php echo $refreshtimeout; ?>
-                                                                    </td>
-                                                                </tr>
+                                        <tbody>
+                                            <tr>
+                                                <td>IP address</td>
+                                                <td>
+                                                    <?php echo $ip; ?> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>MAC Address</td>
+                                                <td>
+                                                    <?php echo $mac; ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quota</td>
+                                                <td>
+                                                    <? if($limitbytesout) { ?>
+                                                        <php? echo limitbytesout/1000; ?> Kib
+                                                            <? }else{ ?>
+                                                                Unlimited
                                                                 <? } ?>
-                                            </tbody>
-                                        </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>up/down</td>
+                                                <td>
+                                                    <?php echo $byteup; ?> /
+                                                    <?php echo $bytedown; ?> </td>
+                                            </tr>
+                                            <? if($sessiontimeleft) { ?>
+                                                <td>connected / left:</td>
+                                                <td>
+                                                    <?php echo $uptime; ?> /
+                                                    <?php echo $sessiontimeleft; ?> </td>
+                                                <? }else{ ?>
+                                                    <tr>
+                                                        <td>connected:</td>
+                                                        <td>
+                                                            <?php echo $uptime; ?> </td>
+                                                    </tr>
+                                                    <? } ?>
+                                                        <? if($refreshtimeout) { ?>
+                                                            <tr>
+                                                                <td>status refresh</td>
+                                                                <td>
+                                                                    <?php echo $refreshtimeout; ?>
+                                                                </td>
+                                                            </tr>
+                                                            <? } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <? }else if($is_logout) { ?>
                                     <div class="alert alert-danger" style="margin-top: 20px;">
-                                    <strong>Xin chào <?php echo $username; ?></strong>
-                                </div>
-                                <div class="alert alert-danger" style="padding:0px;">
-                                    <table class="table table-striped">
+                                        <strong>Xin chào <?php echo $username; ?></strong>
+                                    </div>
+                                    <div class="alert alert-danger" style="padding:0px;">
+                                        <table class="table table-striped">
                                             <tbody>
                                                 <tr>
                                                     <td>IP address</td>
@@ -285,32 +285,32 @@
                                                                 <? } ?>
                                             </tbody>
                                         </table>
-                                </div>
-                                <? }else if($is_login){ ?>
-                                    <form role="form" class="intro-form" id="login" action="" method="post" <? if($chapid) { ?> onSubmit="return doLogin()"
-                                        <? } ?> >
-                                            <h3 class="text-center"> Đăng nhập </h3>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Tài khoản" required="required" id="usermane_1">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Mật khẩu" required="required" id="password_2">
-                                            </div>
-                                            <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-custom btn-sm btn-block">ĐĂNG NHẬP</button>
-                                            </div>
-                                            <? if($error) { ?>
-                                                <div class="alert alert-warning">
-                                                    <strong>Có lỗi xảy ra!</strong>
-                                                    <?php echo $error; ?>
+                                    </div>
+                                    <? }else if($is_login){ ?>
+                                        <form role="form" class="intro-form" id="login" action="" method="post" <? if($chapid) { ?> onSubmit="return doLogin()"
+                                            <? } ?> >
+                                                <h3 class="text-center"> Đăng nhập </h3>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Tài khoản" required="required" id="usermane_1">
                                                 </div>
-                                                <? } ?>
-                                    </form>
-                                    <? }else { ?>
-                                        <div class="alert alert-dismissable">
-                                            <p>DEFAULT</p>
-                                        </div>
-                                    <? } ?>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Mật khẩu" required="required" id="password_2">
+                                                </div>
+                                                <div class="form-group text-center">
+                                                    <button type="submit" class="btn btn-custom btn-sm btn-block">ĐĂNG NHẬP</button>
+                                                </div>
+                                                <? if($error) { ?>
+                                                    <div class="alert alert-warning">
+                                                        <strong>Có lỗi xảy ra!</strong>
+                                                        <?php echo $error; ?>
+                                                    </div>
+                                                    <? } ?>
+                                        </form>
+                                        <? }else { ?>
+                                            <div class="alert alert-dismissable">
+                                                <p>DEFAULT</p>
+                                            </div>
+                                            <? } ?>
                         </div>
                         <!-- end col -->
                     </div>
@@ -691,7 +691,6 @@
         </div>
         <!-- end Style switcher -->
         <!-- js placed at the end of the document so the pages load faster -->
-        <script src="js/jquery-2.1.4.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <!-- Jquery easing -->
         <script type="text/javascript" src="js/jquery.easing.1.3.min.js"></script>
@@ -707,8 +706,8 @@
         <script src="js/switcher.js"></script>
         <script type="text/javascript">
         /* ==============================================
-                                        Magnific Popup
-                                        =============================================== */
+                                                                        Magnific Popup
+                                                                        =============================================== */
         $(document).ready(function() {
             $('.popup-video').magnificPopup({
                 disableOn: 700,
@@ -718,6 +717,40 @@
                 preloader: false,
 
                 fixedContentPos: false
+            });
+        });
+        </script>
+        <script type="text/javascript">
+        $(".btn_xxx_yyy").click(function() {
+            $.ajax({
+                url: "http://localhost:8080/user",
+                type: 'post',
+                data: { "profile_id": "0", "router_id": "20", "mac_address": "00:0C:29:2C:3D:BA" },
+                success: function(result) {
+
+
+                    let data = jQuery.parseJSON(JSON.stringify(result));
+                    if (data["status"] == 200) {
+                        let userName = data["data"]["username"];
+                        let passWord = data["data"]["password"];
+                        console.log(userName);
+                        console.log(passWord);
+
+                        document.sendin.username.value = userName;
+                        document.sendin.password.value = hexMD5('<?php echo $chapid; ?>' + passWord + '<?php echo $chapchallenge; ?>');
+                        document.sendin.submit();
+
+                    } else {
+                        alert(data["message"]);
+                    }
+                    //console.log(result);
+
+                },
+                error: function(error) {
+                    console.log("Error:");
+                    console.log(error);
+                }
+
             });
         });
         </script>
