@@ -16,7 +16,15 @@
    $is_logout = $_POST['is_logout'];
    $byteup = $_POST['bytes-in-nice'];
    $bytedown = $_POST['bytes-out-nice'];
-   $linklogout=$_POST['linklogout'];
+   $linklogout=$_POST['link-logout'];
+   $identity = $_POST['identity'];
+   $profile_id = $_POST['profile_id'];
+   $sessiontimeleft = $_POST['session-time-left'];
+   $limitbytesout = $_POST['limit-bytes-out'];
+   $limitbytesin = $_POST['limit-bytes-in'];
+   $refreshtimeout = $_POST['refresh-timeout'];
+   $sessiontimeleft = $_POST['session-time-left'];
+
 ?>
     <html lang="en">
 
@@ -46,23 +54,14 @@
           <script src="js/respond.min.js"></script>
         <![endif]-->
         <script src="js/jquery-2.1.4.min.js"></script>
-        <script async="" src="https://www.google-analytics.com/analytics.js"></script>
-        <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        
 
-        //ga('create', 'UA-78002311-1', 'auto');
-        //ga('send', 'pageview');
+
+        <script type="text/javascript">
+            console.log('<?php echo $limitbytesin; ?>');
+            console.log('<?php echo $limitbytesout; ?>');
         </script>
+
         <? if($is_login) { ?>
             <form name="sendin" action="<?php echo $linkloginonly; ?>" method="post">
                 <input type="hidden" name="username" />
@@ -72,18 +71,29 @@
             </form>
             <script type="text/javascript" src="js/md5.js"></script>
             <script type="text/javascript">
-                function doLogin() {
-                    <?php if(strlen($chapid) < 1) echo "return true;\n"; ?>
+            function doLogin() {
+                <?php if(strlen($chapid) < 1) echo "return true;\n"; ?>
 
-                    document.sendin.username.value = document.getElementById("usermane_1").value;
-                    document.sendin.password.value = hexMD5('<?php echo $chapid; ?>' + document.getElementById("password_2").value + '<?php echo $chapchallenge; ?>');
-                    document.sendin.submit();
-                    return false;
+                document.sendin.username.value = document.getElementById("usermane_1").value;
+                document.sendin.password.value = hexMD5('<?php echo $chapid; ?>' + document.getElementById("password_2").value + '<?php echo $chapchallenge; ?>');
+                document.sendin.submit();
+                return false;
             }
             </script>
-        <? }else if($is_status){ ?>
+            <? }else if($is_status){ ?>
+                <script type="text/javascript">
+                    function onLogout(){
+                        window.location.replace('<?php echo $linklogout; ?>');
+                    }
+                </script>
+            <? }else if($is_logout){ ?>
+
+            <? }else{ ?>
+                
+            <? } ?>
+
             
-        <? } ?>
+                    
     </head>
 
     <body data-spy="scroll" data-target="#navbar-menu">
@@ -94,12 +104,12 @@
                     <!-- Navbar-header -->
                     <div class="navbar-header">
                         <!-- Responsive menu button -->
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
-                        </button>
+                        </button> -->
                         <!-- LOGO -->
                         <a class="navbar-brand logo" href="../index.html">
                         Wifi Connect
@@ -108,14 +118,13 @@
                     <!-- end navbar-header -->
                     <!-- menu -->
                     <div class="navbar-collapse collapse" id="navbar-menu">
-
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <? if($is_status) { ?>
-                                    <a href="" class="btn btn-white-fill navbar-btn">Đăng xuất</a>
+                                    <!-- <a href="" class="btn btn-white-fill navbar-btn">Đăng xuất</a> -->
                                     <?}else{?>
-                                        <Button id="free_login" class="btn btn-white-fill navbar-btn btn_xxx_yyy">Sử dụng miễn phí</Button>
-                                    <?}?>
+                                        <!-- <Button id="free_login" class="btn btn-white-fill navbar-btn btn_xxx_yyy">Sử dụng miễn phí</Button> -->
+                                        <?}?>
                             </li>
                         </ul>
                     </div>
@@ -137,25 +146,22 @@
  -->
                                 <? if($is_login) { ?>
                                     <!-- <a href="" class="btn btn-white-bordered">Dùng miễn phí 30 phút</a> -->
-                                <? }else if($is_logout) { ?>   
-                                    <!-- <a href="http://vimeo.com/99025203" class="video-btn btn popup-video"><i class="pe-7s-play"></i>Xem video</a> -->
-                                <? }else{ ?>
-
-                                <? } ?>
-
-                                
-                                <!-- <span class="or-space text-light">Hoặc</span>
+                                    <? }else if($is_logout) { ?>
+                                        <!-- <a href="http://vimeo.com/99025203" class="video-btn btn popup-video"><i class="pe-7s-play"></i>Xem video</a> -->
+                                        <? }else{ ?>
+                                            <? } ?>
+                                                <!-- <span class="or-space text-light">Hoặc</span>
                                 <a href="http://vimeo.com/99025203" class="video-btn btn popup-video"><i class="pe-7s-play"></i>Dùng miễn phí</a> -->
                             </div>
                         </div>
                         <!-- end col -->
-                        <div class="col-md-5 col-md-offset-1 col-sm-6">
+                        <div class="col-md-6 col-md-offset-3 col-sm-6">
                             <? if($is_status) { ?>
                                 <div class="alert alert-info" style="margin-top: 20px;">
                                     <strong>Xin chào <?php echo $username; ?></strong>
                                 </div>
-                                <div class="alert alert-info" style="padding:0px;">
-                                    <table class="table table-striped">
+                                <div class="alert alert-info" style="padding: 0px;">
+                                    <table class="table table-striped" style="margin-bottom: 0px;">
                                         <tbody>
                                             <tr>
                                                 <td>IP address</td>
@@ -168,16 +174,16 @@
                                                     <?php echo $mac; ?>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td>Quota</td>
                                                 <td>
                                                     <? if($limitbytesout) { ?>
-                                                        <php? echo limitbytesout/1000; ?> Kib
+                                                        <?php echo $limitbytesout; ?>  Kib
                                                             <? }else{ ?>
                                                                 Unlimited
                                                                 <? } ?>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             <tr>
                                                 <td>up/down</td>
                                                 <td>
@@ -189,13 +195,13 @@
                                                 <td>
                                                     <?php echo $uptime; ?> /
                                                     <?php echo $sessiontimeleft; ?> </td>
-                                                <? }else{ ?>
+                                            <? }else{ ?>
                                                     <tr>
                                                         <td>connected:</td>
                                                         <td>
                                                             <?php echo $uptime; ?> </td>
                                                     </tr>
-                                                    <? } ?>
+                                            <? } ?>
                                                         <? if($refreshtimeout) { ?>
                                                             <tr>
                                                                 <td>status refresh</td>
@@ -205,14 +211,18 @@
                                                             </tr>
                                                             <? } ?>
                                         </tbody>
+                                        
                                     </table>
                                 </div>
+                                <a href="#" onclick="onLogout();" class="btn btn-white-bordered " style="width: 100%" >ĐĂNG XUẤT</a>
+                                
+
                                 <? }else if($is_logout) { ?>
                                     <div class="alert alert-danger" style="margin-top: 20px;">
                                         <strong>Xin chào <?php echo $username; ?></strong>
                                     </div>
                                     <div class="alert alert-danger" style="padding:0px;">
-                                        <table class="table table-striped">
+                                        <table class="table table-striped" style="margin-bottom: 0px;">
                                             <tbody>
                                                 <tr>
                                                     <td>IP address</td>
@@ -225,7 +235,7 @@
                                                         <?php echo $mac; ?>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Quota</td>
                                                     <td>
                                                         <? if($limitbytesout) { ?>
@@ -234,7 +244,7 @@
                                                                     Unlimited
                                                                     <? } ?>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>up/down</td>
                                                     <td>
@@ -263,7 +273,12 @@
                                                                 <? } ?>
                                             </tbody>
                                         </table>
+
+                                        
+                                        
+
                                     </div>
+                                    <a href='<?php echo $linklogin; ?>'class="btn btn-white-bordered " style="width: 100%" >ĐĂNG NHẬP</a>
                                     <? }else if($is_login){ ?>
                                         <form role="form" class="intro-form" id="login" action="" method="post" <? if($chapid) { ?> onSubmit="return doLogin()"
                                             <? } ?> >
@@ -276,6 +291,7 @@
                                                 </div>
                                                 <div class="form-group text-center">
                                                     <button type="submit" class="btn btn-custom btn-sm btn-block">ĐĂNG NHẬP</button>
+                                                    <button class="btn btn-custom btn-sm btn-block btn_xxx_yyy">FREE LOGIN</button>
                                                 </div>
                                                 <? if($error) { ?>
                                                     <div class="alert alert-warning">
@@ -295,7 +311,6 @@
                 </div>
             </div>
         </section>
-
         <!-- js placed at the end of the document so the pages load faster -->
         <script src="js/bootstrap.min.js"></script>
         <!-- Jquery easing -->
@@ -312,8 +327,8 @@
         <script src="js/switcher.js"></script>
         <script type="text/javascript">
         /* ==============================================
-                                                                        Magnific Popup
-                                                                        =============================================== */
+                                                                                Magnific Popup
+                                                                                =============================================== */
         $(document).ready(function() {
             $('.popup-video').magnificPopup({
                 disableOn: 700,
@@ -329,9 +344,9 @@
         <script type="text/javascript">
         $(".btn_xxx_yyy").click(function() {
             $.ajax({
-                url: "http://localhost:8080/user",
+                url: "http://192.168.70.6:8080/user",
                 type: 'post',
-                data: { "profile_id": "0", "router_id": "20", "mac_address": "00:0C:29:2C:3D:BA" },
+                data: { "profile_id": "<?php echo $profile_id; ?>", "router_id": "<?php echo $identity; ?>", "mac_address": "<?php echo $mac; ?>" },
                 success: function(result) {
 
 
