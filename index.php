@@ -1,5 +1,5 @@
 <?php
-   $mac=$_POST['mac'];
+   $mac=$_POST['mac'] ?? '';
    $ip=$_POST['ip'] ?? '';
    $username=$_POST['username'] ?? '';
    $linklogin=$_POST['link-login'] ?? '';
@@ -299,7 +299,7 @@
                                             <div class="alert alert-dismissable">
                                                 <p>DEFAULT</p>
                                             </div>
-                                            <?php } ?>
+                                            <?php  } ?>
                         </div>
                         <!-- end col -->
                     </div>
