@@ -1,29 +1,30 @@
 <?php
    $mac=$_POST['mac'];
-   $ip=$_POST['ip'];
-   $username=$_POST['username'];
-   $linklogin=$_POST['link-login'];
-   $linkorig=$_POST['link-orig'];
-   $error=$_POST['error'];
-   $chapid=$_POST['chap-id'];
-   $chapchallenge=$_POST['chap-challenge'];
-   $linkloginonly=$_POST['link-login-only'];
-   $linkorigesc=$_POST['link-orig-esc'];
-   $macesc=$_POST['mac-esc'];
-   $uptime = $_POST['uptime'];
-   $is_status = $_POST['is_status'];
-   $is_login = $_POST['is_login'];
-   $is_logout = $_POST['is_logout'];
-   $byteup = $_POST['bytes-in-nice'];
-   $bytedown = $_POST['bytes-out-nice'];
-   $linklogout=$_POST['link-logout'];
-   $identity = $_POST['identity'];
-   $profile_id = $_POST['profile_id'];
-   $sessiontimeleft = $_POST['session-time-left'];
-   $limitbytesout = $_POST['limit-bytes-out'];
-   $limitbytesin = $_POST['limit-bytes-in'];
-   $refreshtimeout = $_POST['refresh-timeout'];
-   $sessiontimeleft = $_POST['session-time-left'];
+   $ip=$_POST['ip'] ?? '';
+   $username=$_POST['username'] ?? '';
+   $linklogin=$_POST['link-login'] ?? '';
+    $linkorig=$_POST['link-orig'] ?? '';
+    $error=$_POST['error'] ?? '';
+    $chapid=$_POST['chap-id'] ?? '';
+    $chapchallenge=$_POST['chap-challenge'] ?? '';
+    $linkloginonly=$_POST['link-login-only'] ?? '';
+    $linkorigesc=$_POST['link-orig-esc'] ?? '';
+    $macesc=$_POST['mac-esc'] ?? '';
+    $uptime = $_POST['uptime'] ?? 0;
+
+    $is_status = isset($_POST['is_status']) ? $_POST['is_status'] : false;
+    $is_login = isset($_POST['is_login']) ?  $_POST['is_login'] :  false;
+    $is_logout = isset($_POST['is_logout']) ? $_POST['is_logout'] : false;
+   $byteup = $_POST['bytes-in-nice'] ?? 0;
+   $bytedown = $_POST['bytes-out-nice'] ?? 0;
+   $linklogout=$_POST['link-logout'] ?? '';
+   $identity = $_POST['identity'] ?? '';
+   $profile_id = $_POST['profile_id'] ?? '';
+   $sessiontimeleft = $_POST['session-time-left'] ?? 0;
+   $limitbytesout = $_POST['limit-bytes-out'] ?? 0;
+   $limitbytesin = $_POST['limit-bytes-in'] ?? 0;
+   $refreshtimeout = $_POST['refresh-timeout'] ?? 0;
+   $sessiontimeleft = $_POST['session-time-left'] ?? 0;
 
 ?>
     <html lang="en">
@@ -54,15 +55,9 @@
           <script src="js/respond.min.js"></script>
         <![endif]-->
         <script src="js/jquery-2.1.4.min.js"></script>
-        
 
 
-        <script type="text/javascript">
-            console.log('<?php echo $limitbytesin; ?>');
-            console.log('<?php echo $limitbytesout; ?>');
-        </script>
-
-        <? if($is_login) { ?>
+        <?php if ($is_login) { ?>
             <form name="sendin" action="<?php echo $linkloginonly; ?>" method="post">
                 <input type="hidden" name="username" />
                 <input type="hidden" name="password" />
@@ -80,17 +75,17 @@
                 return false;
             }
             </script>
-            <? }else if($is_status){ ?>
+        <?php }else if($is_status){ ?>
                 <script type="text/javascript">
                     function onLogout(){
                         window.location.replace('<?php echo $linklogout; ?>');
                     }
                 </script>
-            <? }else if($is_logout){ ?>
+            <?php }else if($is_logout){ ?>
 
-            <? }else{ ?>
+            <?php }else{ ?>
                 
-            <? } ?>
+            <?php } ?>
 
             
                     
@@ -120,11 +115,11 @@
                     <div class="navbar-collapse collapse" id="navbar-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <? if($is_status) { ?>
+                                <?php if($is_status) { ?>
                                     <!-- <a href="" class="btn btn-white-fill navbar-btn">Đăng xuất</a> -->
-                                    <?}else{?>
+                                    <?php }else{?>
                                         <!-- <Button id="free_login" class="btn btn-white-fill navbar-btn btn_xxx_yyy">Sử dụng miễn phí</Button> -->
-                                        <?}?>
+                                    <?php }?>
                             </li>
                         </ul>
                     </div>
@@ -144,19 +139,19 @@
                                 <!-- <h1 class="h1 font-light text-white w-full">Wifi Connect is a </h1>
                                 <h4 class="text-light w-full">Wifi Connect is a.</h4>
  -->
-                                <? if($is_login) { ?>
+                                <?php if($is_login) { ?>
                                     <!-- <a href="" class="btn btn-white-bordered">Dùng miễn phí 30 phút</a> -->
-                                    <? }else if($is_logout) { ?>
+                                    <?php }else if($is_logout) { ?>
                                         <!-- <a href="http://vimeo.com/99025203" class="video-btn btn popup-video"><i class="pe-7s-play"></i>Xem video</a> -->
-                                        <? }else{ ?>
-                                            <? } ?>
+                                        <?php }else{ ?>
+                                            <?php } ?>
                                                 <!-- <span class="or-space text-light">Hoặc</span>
                                 <a href="http://vimeo.com/99025203" class="video-btn btn popup-video"><i class="pe-7s-play"></i>Dùng miễn phí</a> -->
                             </div>
                         </div>
                         <!-- end col -->
                         <div class="col-md-6 col-md-offset-3 col-sm-6">
-                            <? if($is_status) { ?>
+                            <?php if($is_status == true) { ?>
                                 <div class="alert alert-info" style="margin-top: 20px;">
                                     <strong>Xin chào <?php echo $username; ?></strong>
                                 </div>
@@ -217,7 +212,7 @@
                                 <a href="#" onclick="onLogout();" class="btn btn-white-bordered " style="width: 100%" >ĐĂNG XUẤT</a>
                                 
 
-                                <? }else if($is_logout) { ?>
+                                <?php }else if($is_logout) { ?>
                                     <div class="alert alert-danger" style="margin-top: 20px;">
                                         <strong>Xin chào <?php echo $username; ?></strong>
                                     </div>
@@ -279,7 +274,7 @@
 
                                     </div>
                                     <a href='<?php echo $linklogin; ?>'class="btn btn-white-bordered " style="width: 100%" >ĐĂNG NHẬP</a>
-                                    <? }else if($is_login){ ?>
+                                    <?php }else if($is_login){ ?>
                                         <form role="form" class="intro-form" id="login" action="" method="post" <? if($chapid) { ?> onSubmit="return doLogin()"
                                             <? } ?> >
                                                 <h3 class="text-center"> Đăng nhập </h3>
@@ -300,11 +295,11 @@
                                                     </div>
                                                     <? } ?>
                                         </form>
-                                        <? }else { ?>
+                                        <?php }else { ?>
                                             <div class="alert alert-dismissable">
                                                 <p>DEFAULT</p>
                                             </div>
-                                            <? } ?>
+                                            <?php } ?>
                         </div>
                         <!-- end col -->
                     </div>
