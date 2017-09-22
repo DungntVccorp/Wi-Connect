@@ -1,44 +1,50 @@
 <?php
-   $mac=$_POST['mac'] ?? '';
-   $ip=$_POST['ip'] ?? '';
-   $username=$_POST['username'] ?? '';
-   $linklogin=$_POST['link-login'] ?? '';
-    $linkorig=$_POST['link-orig'] ?? '';
-    $error=$_POST['error'] ?? '';
-    $chapid=$_POST['chap-id'] ?? '';
-    $chapchallenge=$_POST['chap-challenge'] ?? '';
-    $linkloginonly=$_POST['link-login-only'] ?? '';
-    $linkorigesc=$_POST['link-orig-esc'] ?? '';
-    $macesc=$_POST['mac-esc'] ?? '';
-    $uptime = $_POST['uptime'] ?? 0;
+     //var_dump($_POST);
+    // var_dump($_SERVER);
 
-    $is_status = isset($_POST['is_status']) ? $_POST['is_status'] : false;
-    $is_login = isset($_POST['is_login']) ?  $_POST['is_login'] :  false;
-    $is_logout = isset($_POST['is_logout']) ? $_POST['is_logout'] : false;
-   $byteup = $_POST['bytes-in-nice'] ?? 0;
-   $bytedown = $_POST['bytes-out-nice'] ?? 0;
-   $linklogout=$_POST['link-logout'] ?? '';
-   $identity = $_POST['identity'] ?? '';
-   $profile_id = $_POST['profile_id'] ?? '';
-   $sessiontimeleft = $_POST['session-time-left'] ?? 0;
-   $limitbytesout = $_POST['limit-bytes-out'] ?? 0;
-   $limitbytesin = $_POST['limit-bytes-in'] ?? 0;
-   $refreshtimeout = $_POST['refresh-timeout'] ?? 0;
-   $sessiontimeleft = $_POST['session-time-left'] ?? 0;
+   $mac=$_REQUEST['mac'] ?? '';
+   $ip=$_REQUEST['ip'] ?? '';
+   $username=$_REQUEST['username'] ?? '';
+   $linklogin=$_REQUEST['link-login'] ?? '';
+    $linkorig=$_REQUEST['link-orig'] ?? '';
+    $error=$_REQUEST['error'] ?? '';
+    $chapid=$_REQUEST['chap-id'] ?? '';
+    $chapchallenge=$_REQUEST['chap-challenge'] ?? '';
+    $linkloginonly=$_REQUEST['link-login-only'] ?? '';
+    $linkorigesc=$_REQUEST['link-orig-esc'] ?? '';
+    $macesc=$_REQUEST['mac-esc'] ?? '';
+    $uptime = $_REQUEST['uptime'] ?? 0;
+
+    $is_status = isset($_REQUEST['is_status']) ? $_REQUEST['is_status'] : false;
+    $is_login = isset($_REQUEST['is_login']) ?  $_REQUEST['is_login'] :  false;
+    $is_logout = isset($_REQUEST['is_logout']) ? $_REQUEST['is_logout'] : false;
+   $byteup = $_REQUEST['bytes-in-nice'] ?? 0;
+   $bytedown = $_REQUEST['bytes-out-nice'] ?? 0;
+   $linklogout=$_REQUEST['link-logout'] ?? '';
+   $identity = $_REQUEST['identity'] ?? '';
+   $profile_id = $_REQUEST['profile_id'] ?? '';
+   $sessiontimeleft = $_REQUEST['session-time-left'] ?? 0;
+   $limitbytesout = $_REQUEST['limit-bytes-out'] ?? 0;
+   $limitbytesin = $_REQUEST['limit-bytes-in'] ?? 0;
+   $refreshtimeout = $_REQUEST['refresh-timeout'] ?? 0;
+   $sessiontimeleft = $_REQUEST['session-time-left'] ?? 0;
+   $refresh_timeout_secs = $_REQUEST['refresh-timeout-secs'] ?? -1;
+   $server_address = $_REQUEST['server-address'] ?? ''
 
 ?>
     <html lang="en">
 
     <head>
+        <?php if ($refresh_timeout_secs != -1) { ?>
+            <meta http-equiv="refresh" content="<?php echo $refresh_timeout_secs; ?>; url=http://<?php echo $server_address; ?>">
+        <?php } ?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
         <meta name="author" content="Coderthemes">
         <link rel="shortcut icon" href="images/favicon.ico">
         <title>Wifi Connect</title>
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet" type="text/css">
+        
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Icons CSS -->
@@ -60,6 +66,19 @@
         <script type="text/javascript">
             console.log('<?php echo $identity; ?>');
         </script>
+        <script type="text/javascript">
+            function isGuest(uuid){
+                var pattern = new RegExp('/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i');
+                if (pattern.test(uuid) === true) {
+                  return "Xin chào" + uuid;
+                } else {
+                  return "Xin chào";
+                }
+            }
+        </script>
+
+
+
 
         <?php if ($is_login) { ?>
             <form name="sendin" action="<?php echo $linkloginonly; ?>" method="post">
@@ -80,15 +99,39 @@
             }
             </script>
         <?php }else if($is_status){ ?>
-                <script type="text/javascript">
-                    function onLogout(){
-                        window.location.replace('<?php echo $linklogout; ?>');
-                    }
-                </script>
+                
             <?php }else if($is_logout){ ?>
 
             <?php }else{ ?>
                 
+            <script type="text/javascript">
+                
+                $.ajax({
+                url: "http://10.3.2.75:8080/ping",
+                type: 'post',
+                success: function(result) {
+
+
+                    let data = jQuery.parseJSON(JSON.stringify(result));
+                    if (data["status"] == 200) {
+                        let ip = data["data"]["ip"];
+                        console.log(ip);
+                        window.location.replace(ip);  
+
+                    } else{
+
+                    }
+                },
+                error: function(error) {
+                    console.log("Error:");
+                    console.log(error);
+                }
+
+                });
+                
+            </script>
+
+
             <?php } ?>
 
             
@@ -157,7 +200,7 @@
                         <div class="col-md-6 col-md-offset-3 col-sm-6">
                             <?php if($is_status == true) { ?>
                                 <div class="alert alert-info" style="margin-top: 20px;">
-                                    <strong>Xin chào <?php echo $username; ?></strong>
+                                    <strong><script>document.write(isGuest('<?php echo $username; ?>'))</script></strong>
                                 </div>
                                 <div class="alert alert-info" style="padding: 0px;">
                                     <table class="table table-striped" style="margin-bottom: 0px;">
@@ -213,7 +256,7 @@
                                         
                                     </table>
                                 </div>
-                                <a href="#" onclick="onLogout();" class="btn btn-white-bordered " style="width: 100%" >ĐĂNG XUẤT</a>
+                                <a href="<?php echo $linklogout; ?>" class="btn btn-white-bordered " style="width: 100%" >ĐĂNG XUẤT</a>
                                 
 
                                 <?php }else if($is_logout) { ?>
@@ -300,8 +343,8 @@
                                                     <?php } ?>
                                         </form>
                                         <?php }else { ?>
-                                            <div class="alert alert-dismissable">
-                                                <p>DEFAULT</p>
+                                            <div class="alert alert-warning">
+                                                <strong>Không thể xác định bạn!</strong>
                                             </div>
                                             <?php  } ?>
                         </div>
@@ -343,7 +386,7 @@
         <script type="text/javascript">
         $(".btn_xxx_yyy").click(function() {
             $.ajax({
-                url: "http://10.3.2.44:8080/user",
+                url: "http://10.3.2.75:8080/user",
                 type: 'post',
                 data: { "profile_id": "<?php echo $profile_id; ?>", "router_id": "<?php echo $identity; ?>", "mac_address": "<?php echo $mac; ?>" },
                 success: function(result) {
