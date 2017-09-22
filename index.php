@@ -344,7 +344,11 @@
                                         </form>
                                         <?php }else { ?>
                                             <div class="alert alert-warning">
-                                                <strong>Không thể xác định bạn!</strong>
+                                                <center>
+                                                 <strong>Chúng tôi không thể xác định bạn!</strong>
+                                                <br>
+                                                Hãy chắc rằng đang ở trong hệ thống wifi connect của chúng tôi
+                                            </center>
                                             </div>
                                             <?php  } ?>
                         </div>
