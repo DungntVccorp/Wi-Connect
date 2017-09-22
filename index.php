@@ -57,6 +57,10 @@
         <script src="js/jquery-2.1.4.min.js"></script>
 
 
+        <script type="text/javascript">
+            console.log('<?php echo $identity; ?>');
+        </script>
+
         <?php if ($is_login) { ?>
             <form name="sendin" action="<?php echo $linkloginonly; ?>" method="post">
                 <input type="hidden" name="username" />
@@ -169,42 +173,42 @@
                                                     <?php echo $mac; ?>
                                                 </td>
                                             </tr>
-                                            <!-- <tr>
+                                            <tr>
                                                 <td>Quota</td>
                                                 <td>
-                                                    <? if($limitbytesout) { ?>
+                                                    <?php if($limitbytesout) { ?>
                                                         <?php echo $limitbytesout; ?>  Kib
-                                                            <? }else{ ?>
+                                                            <?php }else{ ?>
                                                                 Unlimited
-                                                                <? } ?>
+                                                                <?php } ?>
                                                 </td>
-                                            </tr> -->
+                                            </tr>
                                             <tr>
                                                 <td>up/down</td>
                                                 <td>
                                                     <?php echo $byteup; ?> /
                                                     <?php echo $bytedown; ?> </td>
                                             </tr>
-                                            <? if($sessiontimeleft) { ?>
+                                            <?php if($sessiontimeleft) { ?>
                                                 <td>connected / left:</td>
                                                 <td>
                                                     <?php echo $uptime; ?> /
                                                     <?php echo $sessiontimeleft; ?> </td>
-                                            <? }else{ ?>
+                                            <?php }else{ ?>
                                                     <tr>
                                                         <td>connected:</td>
                                                         <td>
                                                             <?php echo $uptime; ?> </td>
                                                     </tr>
-                                            <? } ?>
-                                                        <? if($refreshtimeout) { ?>
+                                            <?php } ?>
+                                                        <?php if($refreshtimeout) { ?>
                                                             <tr>
                                                                 <td>status refresh</td>
                                                                 <td>
                                                                     <?php echo $refreshtimeout; ?>
                                                                 </td>
                                                             </tr>
-                                                            <? } ?>
+                                                            <?php } ?>
                                         </tbody>
                                         
                                     </table>
@@ -230,42 +234,42 @@
                                                         <?php echo $mac; ?>
                                                     </td>
                                                 </tr>
-                                                <!-- <tr>
+                                                <tr>
                                                     <td>Quota</td>
                                                     <td>
-                                                        <? if($limitbytesout) { ?>
+                                                        <?php if($limitbytesout) { ?>
                                                             <php? echo limitbytesout/1000; ?> Kib
-                                                                <? }else{ ?>
+                                                                <?php }else{ ?>
                                                                     Unlimited
-                                                                    <? } ?>
+                                                                    <?php } ?>
                                                     </td>
-                                                </tr> -->
+                                                </tr>
                                                 <tr>
                                                     <td>up/down</td>
                                                     <td>
                                                         <?php echo $byteup; ?> /
                                                         <?php echo $bytedown; ?> </td>
                                                 </tr>
-                                                <? if($sessiontimeleft) { ?>
+                                                <?php if($sessiontimeleft) { ?>
                                                     <td>connected / left:</td>
                                                     <td>
                                                         <?php echo $uptime; ?> /
                                                         <?php echo $sessiontimeleft; ?> </td>
-                                                    <? }else{ ?>
+                                                    <?php }else{ ?>
                                                         <tr>
                                                             <td>connected:</td>
                                                             <td>
                                                                 <?php echo $uptime; ?> </td>
                                                         </tr>
-                                                        <? } ?>
-                                                            <? if($refreshtimeout) { ?>
+                                                        <?php } ?>
+                                                            <?php if($refreshtimeout) { ?>
                                                                 <tr>
                                                                     <td>status refresh</td>
                                                                     <td>
                                                                         <?php echo $refreshtimeout; ?>
                                                                     </td>
                                                                 </tr>
-                                                                <? } ?>
+                                                                <?php } ?>
                                             </tbody>
                                         </table>
 
@@ -275,8 +279,8 @@
                                     </div>
                                     <a href='<?php echo $linklogin; ?>'class="btn btn-white-bordered " style="width: 100%" >ĐĂNG NHẬP</a>
                                     <?php }else if($is_login){ ?>
-                                        <form role="form" class="intro-form" id="login" action="" method="post" <? if($chapid) { ?> onSubmit="return doLogin()"
-                                            <? } ?> >
+                                        <form role="form" class="intro-form" id="login" action="" method="post" <?php if($chapid) { ?> onSubmit="return doLogin()"
+                                            <?php } ?> >
                                                 <h3 class="text-center"> Đăng nhập </h3>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" placeholder="Tài khoản" required="required" id="usermane_1">
@@ -288,12 +292,12 @@
                                                     <button type="submit" class="btn btn-custom btn-sm btn-block">ĐĂNG NHẬP</button>
                                                     <button class="btn btn-custom btn-sm btn-block btn_xxx_yyy">FREE LOGIN</button>
                                                 </div>
-                                                <? if($error) { ?>
+                                                <?php if($error) { ?>
                                                     <div class="alert alert-warning">
                                                         <strong>Có lỗi xảy ra!</strong>
                                                         <?php echo $error; ?>
                                                     </div>
-                                                    <? } ?>
+                                                    <?php } ?>
                                         </form>
                                         <?php }else { ?>
                                             <div class="alert alert-dismissable">
@@ -339,7 +343,7 @@
         <script type="text/javascript">
         $(".btn_xxx_yyy").click(function() {
             $.ajax({
-                url: "http://192.168.70.6:8080/user",
+                url: "http://10.3.2.44:8080/user",
                 type: 'post',
                 data: { "profile_id": "<?php echo $profile_id; ?>", "router_id": "<?php echo $identity; ?>", "mac_address": "<?php echo $mac; ?>" },
                 success: function(result) {
