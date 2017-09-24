@@ -107,7 +107,7 @@
             <script type="text/javascript">
                 
                 $.ajax({
-                url: "http://10.3.2.75:8080/ping",
+                url: "http://45.32.116.47:8080/ping",
                 type: 'post',
                 success: function(result) {
 
@@ -119,7 +119,7 @@
                         window.location.replace(ip);  
 
                     } else{
-
+                        console.log(data["message"]);
                     }
                 },
                 error: function(error) {
@@ -390,7 +390,7 @@
         <script type="text/javascript">
         $(".btn_xxx_yyy").click(function() {
             $.ajax({
-                url: "http://10.3.2.75:8080/user",
+                url: "http://45.32.116.47:8080/user",
                 type: 'post',
                 data: { "profile_id": "<?php echo $profile_id; ?>", "router_id": "<?php echo $identity; ?>", "mac_address": "<?php echo $mac; ?>" },
                 success: function(result) {
